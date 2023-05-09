@@ -16,6 +16,8 @@ import { ContactList } from './ContactList';
 import { Filter } from './Filter';
 import { Header } from 'common/styledCommon';
 
+const LS_KEY = 'contacts';
+
 class App extends Component {
   state = {
     contacts: [],
@@ -65,19 +67,19 @@ class App extends Component {
 
   componentDidMount() {
     //HW3 - Під час завантаження контакти зчитуються з локального сховища і записуються у стан.
-    const savedContacts = JSON.parse(localStorage.getItem('contacts'));
+    const savedContacts = JSON.parse(localStorage.getItem(LS_KEY));
     if (savedContacts) {
       this.setState({ contacts: savedContacts });
     }
   }
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate(_, prevState) {
     //HW3  - Під час додавання та видалення контакту контакти зберігаються у локальне сховище.
     const { contacts } = this.state;
     const { contacts: prevContacts } = prevState;
 
     if (contacts !== prevContacts) {
-      localStorage.setItem('contacts', JSON.stringify(contacts));
+      localStorage.setItem(LS_KEY, JSON.stringify(contacts));
     }
   }
 
