@@ -67,9 +67,14 @@ class App extends Component {
 
   componentDidMount() {
     //HW3 - Під час завантаження контакти зчитуються з локального сховища і записуються у стан.
-    const savedContacts = JSON.parse(localStorage.getItem(LS_KEY));
-    if (savedContacts) {
-      this.setState({ contacts: savedContacts });
+    try {
+      const savedContacts = JSON.parse(localStorage.getItem(LS_KEY));
+      if (savedContacts) {
+        this.setState({ contacts: savedContacts });
+      }
+    } catch (error) {
+      console.log(`Error: ${error.message} - local storage cleared`);
+      localStorage.clear();
     }
   }
 
